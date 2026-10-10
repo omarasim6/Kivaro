@@ -1,0 +1,2 @@
+{ "name": "Kivora EV EcoPilot", "short_name": "EcoPilot", "start_url": "/", "display": "standalone", "background_color": "#101417", "theme_color": "#101417",
+  "icons": [{ "src": "/logo.png", "sizes": "1024x1024", "type": "image/png" }] }

@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "disclaimer": "Estimates only, not certified carbon savings.",
+  "grid_electricity": {
+    "id": "pk_grid_2025",
+    "country": "Pakistan",
+    "label": "Pakistan grid average electricity",
+    "value": 0.347,
+    "unit": "kg CO2e/kWh",
+    "value_g_per_kwh": 347,
+    "data_year": 2025,
+    "factor_type": "average",
+    "basis": "lifecycle",
+    "source": {
+      "name": "Ember, Yearly Electricity Data, as published through Our World in Data",
+      "datasets": [
+        "Ember Pakistan country profile",
+        "Our World in Data: carbon intensity of electricity"
+      ],
+      "source_url": null,
+      "source_last_updated": "2026-04-21"
+    },
+    "notes": [
+      "Average grid factor: generation-weighted national mix, not a marginal factor.",
+      "Data year is 2025; the app must always display the data year and must not imply the factor is live."
+    ]
+  },
+  "comparison_vehicles": {
+    "default": "suzuki_alto_660",
+    "vehicles": {
+      "suzuki_alto_660": {
+        "id": "suzuki_alto_660",
+        "label": "Suzuki Alto 660cc (base comparison)",
+        "fuel": "petrol",
+        "km_per_litre": 18,
+        "kg_co2_per_km_derived": 0.13,
+        "rationale": "Pakistan's best-selling car: 29% of PAMA-reported sales in 2025, its sixth straight year at number one. City fuel average of 18 km/L as listed by PakWheels.",
+        "sources": [
+          "PAMA sales figures for 2025 (via bestsellingcarsblog)",
+          "PakWheels fuel average listing"
+        ]
+      },
+      "toyota_corolla_12": {
+        "id": "toyota_corolla_12",
+        "label": "Toyota Corolla 1.3-1.6L (sensitivity case)",
+        "fuel": "petrol",
+        "km_per_litre": 12,
+        "kg_co2_per_km_derived": 0.196,
+        "rationale": "Sensitivity case at about 12 km/L. Based on a user-reported range of 10-12 km/L plus a third-party benchmark.",
+        "sources": [
+          "PakWheels fuel average listing"
+        ]
+      }
+    }
+  },
+  "petrol": {
+    "id": "petrol_tailpipe",
+    "label": "Petrol combustion",
+    "value": 2.35,
+    "unit": "kg CO2/L",
+    "basis": "tailpipe_combustion_only",
+    "derivation": "8887 g CO2 per US gallon of gasoline / 3.785 L per gallon = 2.348 kg/L, rounded to 2.35",
+    "sources": [
+      "US EPA: 8,887 g CO2 per gallon of gasoline",
+      "UK DEFRA 2023 factor of 2.345 kgCO2e/L (via Climatiq listing), which matches"
+    ],
+    "well_to_tank": {
+      "enabled": false,
+      "value": null,
+      "unit": "kg CO2e/L",
+      "note": "Upstream emissions (extraction, refining, transport) are not included. Roughly a fifth higher is an unsourced estimate, not used in any calculation. Add a sourced well-to-tank factor and set enabled to true to include it."
+    }
+  },
+  "calculation": {
+    "charging_emissions_kg": "energy_kwh * grid_electricity.value",
+    "petrol_kg_per_km": "petrol.value / comparison_vehicle.km_per_litre",
+    "emissions_avoided_kg": "(distance_km * petrol_kg_per_km) - charging_emissions_kg",
+    "data_source_type_for_results": "model_estimated"
+  },
+  "comparison_basis_warning": "Basis mismatch: the petrol factor counts tailpipe combustion only, while the grid factor is lifecycle. The UI and reports must state which basis each figure uses. Avoided-emissions figures are estimates and are not certified carbon savings or carbon credits."
+}
